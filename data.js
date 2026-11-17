@@ -12,7 +12,7 @@ const SERVER_CONFIG = {
     whatsappGroupLabel: "Grup WhatsApp",
     discord: "https://discord.gg/GANTI_LINK_DISCORD",
     discordLabel: "Discord Server",
-    ownerPhone: "6283150082652", // Format internasional tanpa + (contoh: 6281234567890)
+    ownerPhone: "6283150082652", // Format internasional tanpa + (contoh: 6283150082652)
     ownerDisplay: "+62 831-5008-2652",
     ownerName: "Owner Zetriad"
   }
