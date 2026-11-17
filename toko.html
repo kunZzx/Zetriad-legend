@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Toko & Pricelist Resmi — Zetriad Legend</title>
+  <meta name="description" content="Toko resmi Server Minecraft Zetriad Legend. Paket Custom, Exclusive Add-On, Armor Kontrak, Max Skills, Battle Pass, Book Kontrak, SL Exclusive, Ranks, dan Armor Custom." />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=JetBrains+Mono:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <link rel="icon" type="image/jpeg" href="logo.jpg" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- Ambient Background (GPU-Optimized) -->
+  <div class="bg-grid" aria-hidden="true"></div>
+  <div class="bg-glow bg-glow-1" aria-hidden="true"></div>
+  <div class="bg-glow bg-glow-2" aria-hidden="true"></div>
+  <canvas id="particlesCanvas" class="particles-canvas" aria-hidden="true"></canvas>
+
+  <!-- Navbar -->
+  <header class="navbar">
+    <div class="container nav-inner">
+      <a href="index.html" class="brand">
+        <span class="brand-crest">
+          <img src="logo.jpg" alt="Zetriad Legend Logo" class="brand-logo-img" />
+        </span>
+        <span class="brand-text">
+          <strong>ZETRIAD</strong>
+          <small>LEGEND SERVER</small>
+        </span>
+      </a>
+
+      <nav class="nav-links" aria-label="Navigasi Utama">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="toko.html" class="nav-link active">Toko / Pricelist</a>
+      </nav>
+
+      <div class="nav-actions">
+        <button class="nav-ip-pill" id="navCopyIp" title="Klik untuk menyalin IP:Port">
+          <span class="status-dot" id="navStatusDot"></span>
+          <span class="mono">zetriad.my.id:25666</span>
+          <svg class="icon-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="9" y="9" width="13" height="13" rx="2"></rect>
+            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+          </svg>
+        </button>
+
+        <button class="cart-trigger" id="cartTrigger" aria-label="Buka Keranjang Belanja">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <path d="M16 10a4 4 0 0 1-8 0"></path>
+          </svg>
+          <span>Keranjang</span>
+          <span class="cart-badge" id="cartCountBadge">0</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- ==========================================
+         HALAMAN TOKO / PRICELIST RESMI
+         ========================================== -->
+    <section id="toko" class="shop-section">
+      <div class="container">
+        <!-- Store Hero Header -->
+        <div class="shop-hero-card animate-in delay-1">
+          <div class="shop-hero-content">
+            <div class="shop-logo-badge">
+              <img src="logo.jpg" alt="Logo Zetriad Legend" class="shop-logo-img" />
+            </div>
+            <span class="section-eyebrow">OFFICIAL SERVER STORE • 01 – 10</span>
+            <h1 class="section-title">Katalog & Toko Zetriad Legend</h1>
+            <p class="section-desc">
+              Masukkan beberapa item ke <strong>Keranjang</strong> untuk dibeli sekaligus, atau klik <strong>Beli</strong> untuk langsung memesan ke WhatsApp Owner.
+            </p>
+          </div>
+
+          <!-- Search & Filter Bar -->
+          <div class="shop-toolbar">
+            <div class="search-box">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="11" cy="11" r="8"></circle>
+                <path d="M21 21l-4.35-4.35"></path>
+              </svg>
+              <input
+                type="text"
+                id="shopSearch"
+                placeholder="Cari paket, armor, skill, rank, atau command (/fly, /sethome)..."
+                aria-label="Cari item toko"
+              />
+            </div>
+
+            <div class="filter-pills" id="filterPills" role="tablist" aria-label="Filter Kategori Toko">
+              <button class="filter-pill active" data-category="all">Semua Kategori</button>
+              <!-- Di-generate oleh app.js -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Container Kategori Toko -->
+        <div id="shopContainer" class="shop-categories">
+          <!-- Di-render dinamis dari data.js -->
+        </div>
+
+        <div id="emptyState" class="empty-state hidden">
+          <p>Tidak ditemukan item yang cocok dengan kata kunci tersebut.</p>
+          <button class="btn-copy" id="resetFilterBtn">Tampilkan Semua Item</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Floating Bottom Cart Bar (Muncul otomatis saat ada isi keranjang) -->
+  <div class="floating-cart-bar hidden" id="floatingCartBar">
+    <div class="floating-cart-info">
+      <span class="floating-cart-count" id="floatingCartCount">0 Item</span>
+      <span class="floating-cart-sep">•</span>
+      <span class="floating-cart-total">Estimasi: <strong class="mono" id="floatingCartTotal">0K</strong></span>
+    </div>
+    <button class="floating-cart-btn" id="floatingCartOpenBtn">
+      <span>Lihat & Checkout</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+        <path d="M5 12h14M12 5l7 7-7 7"/>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div>
+        <strong>Zetriad Legend</strong>
+        <p class="muted">IP: <span class="mono">zetriad.my.id</span> • Port: <span class="mono">25666</span></p>
+      </div>
+      <p class="muted">© <span id="currentYear"></span> Zetriad Legend. Bukan produk resmi Mojang / Microsoft.</p>
+    </div>
+  </footer>
+
+  <!-- Slide-over Cart Drawer -->
+  <div class="drawer-backdrop" id="drawerBackdrop"></div>
+  <aside class="cart-drawer" id="cartDrawer" aria-label="Keranjang Belanja">
+    <div class="drawer-header">
+      <div>
+        <span class="drawer-eyebrow">RINGKASAN BELANJA</span>
+        <h2 class="drawer-title">Keranjang Belanja</h2>
+      </div>
+      <button class="drawer-close" id="closeDrawerBtn" aria-label="Tutup Keranjang">&times;</button>
+    </div>
+    <div class="drawer-body" id="cartItemsContainer"></div>
+    <form class="drawer-footer hidden" id="cartCheckoutForm">
+      <div class="cart-summary-row">
+        <span class="muted">Estimasi Total</span>
+        <strong class="cart-total" id="cartTotalDisplay">0K</strong>
+      </div>
+      <label class="form-label">
+        <span>Nickname Minecraft (IGN) *</span>
+        <input type="text" id="cartPlayerIgn" required placeholder="Contoh: Steve_Legend" />
+      </label>
+      <label class="form-label">
+        <span>Catatan Pesanan (Opsional)</span>
+        <textarea id="cartPlayerNote" rows="2" placeholder="Contoh: Request skill / Tambah Request SL (+5K)"></textarea>
+      </label>
+      <div class="drawer-actions">
+        <button type="button" class="btn-ghost" id="clearCartBtn">Kosongkan</button>
+        <button type="submit" class="btn-primary-lg full-width">Beli Semua via WA</button>
+      </div>
+    </form>
+  </aside>
+
+  <!-- Interactive Item View / Inspect Modal -->
+  <div class="view-modal-backdrop hidden" id="itemViewModal" role="dialog" aria-modal="true" aria-labelledby="viewModalTitle">
+    <div class="view-modal-card">
+      <button class="view-modal-close" id="closeViewModalBtn" aria-label="Tutup Preview">&times;</button>
+
+      <div class="view-modal-layout">
+        <!-- Interactive 3D Showcase Stage -->
+        <div class="view-stage-wrap">
+          <div class="view-stage" id="viewStage" title="Tahan & geser untuk memutar 3D 360°">
+            <div class="item-visual-grid"></div>
+            <div class="view-pedestal-ring" aria-hidden="true"></div>
+            <div class="view-3d-object" id="viewCanvasHolder">
+              <canvas id="viewModalCanvas" width="260" height="260"></canvas>
+            </div>
+            <span class="view-hint">Tahan & Geser untuk Putar 3D 360° • Scroll untuk Zoom</span>
+          </div>
+
+          <!-- Zoom, Auto-Spin 3D & Prev/Next Controls -->
+          <div class="view-controls-bar">
+            <div class="zoom-group">
+              <button type="button" class="view-ctrl-btn active" id="toggleAutoSpinBtn" title="Putar 3D Otomatis">🔄 3D Spin</button>
+              <button type="button" class="view-ctrl-btn active" data-zoom="1">1x</button>
+              <button type="button" class="view-ctrl-btn" data-zoom="1.4">1.4x</button>
+              <button type="button" class="view-ctrl-btn" data-zoom="1.85">1.8x</button>
+            </div>
+            <div class="nav-item-group">
+              <button type="button" class="view-ctrl-btn" id="prevItemBtn" title="Item Sebelumnya">← Prev</button>
+              <button type="button" class="view-ctrl-btn" id="nextItemBtn" title="Item Selanjutnya">Next →</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Item Details & Actions -->
+        <div class="view-details-pane">
+          <div>
+            <span class="section-eyebrow" id="viewModalCategory">KATEGORI</span>
+            <div class="view-title-row">
+              <h2 class="view-modal-title" id="viewModalTitle">Nama Item</h2>
+              <span class="price-tag" id="viewModalPrice">0K</span>
+            </div>
+            <div id="viewModalBody" class="view-modal-body"></div>
+          </div>
+
+          <div class="view-modal-actions">
+            <button type="button" class="btn-order" id="viewModalAddBtn">+ Keranjang</button>
+            <button type="button" class="btn-primary-lg" id="viewModalBuyBtn">Beli Sekarang</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div class="toast hidden" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="data.js"></script>
+  <script src="ia_vault.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

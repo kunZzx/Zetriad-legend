@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Zetriad Legend — Official Minecraft RPG Server</title>
+  <meta name="description" content="Official Website & Store Server Minecraft Zetriad Legend. IP: zetriad.my.id | Port: 25666. Paket Custom, Ranks, Armor Kontrak, SL Exclusive, dan lainnya." />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=JetBrains+Mono:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <link rel="icon" type="image/jpeg" href="logo.jpg" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- Ambient Background (GPU-Optimized) -->
+  <div class="bg-grid" aria-hidden="true"></div>
+  <div class="bg-glow bg-glow-1" aria-hidden="true"></div>
+  <div class="bg-glow bg-glow-2" aria-hidden="true"></div>
+  <canvas id="particlesCanvas" class="particles-canvas" aria-hidden="true"></canvas>
+
+  <!-- Navbar -->
+  <header class="navbar">
+    <div class="container nav-inner">
+      <a href="index.html" class="brand">
+        <span class="brand-crest">
+          <img src="logo.jpg" alt="Zetriad Legend Logo" class="brand-logo-img" />
+        </span>
+        <span class="brand-text">
+          <strong>ZETRIAD</strong>
+          <small>LEGEND SERVER</small>
+        </span>
+      </a>
+
+      <nav class="nav-links" aria-label="Navigasi Utama">
+        <a href="index.html" class="nav-link active">Home</a>
+        <a href="toko.html" class="nav-link">Toko / Pricelist</a>
+      </nav>
+
+      <div class="nav-actions">
+        <button class="nav-ip-pill" id="navCopyIp" title="Klik untuk menyalin IP:Port">
+          <span class="status-dot" id="navStatusDot"></span>
+          <span class="mono">zetriad.my.id:25666</span>
+          <svg class="icon-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="9" y="9" width="13" height="13" rx="2"></rect>
+            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+          </svg>
+        </button>
+
+        <button class="cart-trigger" id="cartTrigger" aria-label="Buka Keranjang Belanja">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <path d="M16 10a4 4 0 0 1-8 0"></path>
+          </svg>
+          <span>Keranjang</span>
+          <span class="cart-badge" id="cartCountBadge">0</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- ==========================================
+         LAYAR 1: HOME / COMMAND CENTER
+         ========================================== -->
+    <section id="home" class="hero-section">
+      <div class="container hero-container">
+        <!-- Status Pill -->
+        <div class="hero-badges animate-in delay-1">
+          <div class="server-status-badge" id="serverStatusBadge">
+            <span class="status-dot pulse" id="heroStatusDot"></span>
+            <span id="serverStatusText">Mengecek status server...</span>
+          </div>
+          <span class="season-pill">RPG • CUSTOM SKILLS • CONTRACT</span>
+        </div>
+
+        <!-- Hero Logo, Title & Tagline -->
+        <div class="hero-heading-group animate-in delay-2">
+          <div class="hero-logo-showcase">
+            <div class="hero-logo-halo" aria-hidden="true"></div>
+            <img src="logo.jpg" alt="Logo Resmi Server Zetriad Legend" class="hero-logo-img" />
+          </div>
+          <p class="hero-kicker">OFFICIAL MINECRAFT SERVER</p>
+          <h1 class="hero-title">ZETRIAD LEGEND</h1>
+          <p class="hero-subtitle" id="heroTagline">
+            Bangun kekuatanmu dengan Custom Skill, Armor Kontrak, SL Exclusive, dan Rank tertinggi di dunia Zetriad.
+          </p>
+        </div>
+
+        <!-- Bento Server IP & Port Console -->
+        <div class="server-console animate-in delay-3">
+          <div class="console-header">
+            <div class="console-dots" aria-hidden="true">
+              <span></span><span></span><span></span>
+            </div>
+            <span class="console-title">SERVER CONNECTION TERMINAL</span>
+            <span class="console-tag">JAVA & BEDROCK</span>
+          </div>
+
+          <div class="console-body">
+            <div class="console-box">
+              <div class="console-meta">
+                <span class="field-label">ALAMAT IP SERVER</span>
+                <span class="field-hint">Klik tombol untuk menyalin</span>
+              </div>
+              <div class="console-input-row">
+                <code class="field-value mono" id="serverIpDisplay">zetriad.my.id</code>
+                <button class="btn-copy" data-copy="zetriad.my.id">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="9" y="9" width="13" height="13" rx="2"></rect>
+                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                  </svg>
+                  <span>Salin IP</span>
+                </button>
+              </div>
+            </div>
+
+            <div class="console-box console-box-port">
+              <div class="console-meta">
+                <span class="field-label">PORT SERVER</span>
+                <span class="field-hint">Port Default</span>
+              </div>
+              <div class="console-input-row">
+                <code class="field-value mono" id="serverPortDisplay">25666</code>
+                <button class="btn-copy" data-copy="25666">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="9" y="9" width="13" height="13" rx="2"></rect>
+                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                  </svg>
+                  <span>Salin Port</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="console-footer">
+            <button class="btn-copy-full" data-copy="zetriad.my.id:25666">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
+                <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
+              </svg>
+              <span>Salin Lengkap IP & Port — <strong class="mono">zetriad.my.id:25666</strong></span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Bento Community & Contacts (WA, Discord, No. Owner) -->
+        <div class="section-divider animate-in delay-4">
+          <span>KOMUNITAS & KONTAK RESMI</span>
+        </div>
+
+        <div class="contacts-grid animate-in delay-4">
+          <!-- WhatsApp -->
+          <a href="#" id="linkWaGroup" target="_blank" rel="noopener noreferrer" class="contact-card">
+            <div class="contact-top">
+              <div class="contact-icon">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12.031 2c-5.516 0-9.969 4.453-9.969 9.969 0 1.766.469 3.484 1.344 5l-1.406 5.156 5.281-1.375c1.469.797 3.109 1.219 4.75 1.219 5.516 0 9.969-4.453 9.969-9.969S17.547 2 12.031 2zm5.813 14.125c-.25.703-1.438 1.344-2 1.422-.531.078-1.203.109-1.938-.125-.453-.141-1.031-.328-1.766-.641-3.094-1.328-5.109-4.453-5.266-4.656-.156-.203-1.266-1.688-1.266-3.219 0-1.531.797-2.281 1.078-2.594.281-.313.609-.391.813-.391.203 0 .406 0 .594.016.188.016.438-.078.688.516.25.609.859 2.094.938 2.25.078.156.125.344.031.547-.094.203-.156.328-.313.516-.156.188-.328.406-.469.547-.156.156-.313.328-.141.641.172.313.781 1.297 1.672 2.094 1.156 1.031 2.125 1.344 2.438 1.5.313.156.5.125.688-.094.188-.219.797-.938 1.016-1.25.219-.313.422-.266.719-.156.297.109 1.875.891 2.188 1.047.313.156.516.234.594.359.078.125.078.734-.172 1.438z"/>
+                </svg>
+              </div>
+              <span class="contact-badge">GRUP WA</span>
+            </div>
+            <div class="contact-info">
+              <strong class="contact-title">Komunitas WhatsApp</strong>
+              <span class="contact-sub">Info update, event harian & diskusi pemain</span>
+            </div>
+            <div class="contact-cta">
+              <span>Gabung Grup WA</span>
+              <span class="contact-arrow">→</span>
+            </div>
+          </a>
+
+          <!-- Discord -->
+          <a href="#" id="linkDiscord" target="_blank" rel="noopener noreferrer" class="contact-card">
+            <div class="contact-top">
+              <div class="contact-icon">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994.021-.041.001-.09-.041-.106a13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/>
+                </svg>
+              </div>
+              <span class="contact-badge">DISCORD</span>
+            </div>
+            <div class="contact-info">
+              <strong class="contact-title">Discord Zetriad Legend</strong>
+              <span class="contact-sub">Voice chat, open ticket support & market</span>
+            </div>
+            <div class="contact-cta">
+              <span>Masuk Server Discord</span>
+              <span class="contact-arrow">→</span>
+            </div>
+          </a>
+
+          <!-- Nomor Owner -->
+          <div class="contact-card contact-owner-card">
+            <div class="contact-top">
+              <div class="contact-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M12 2l3 6 6 1-4.5 4.5 1 6.5L12 17l-5.5 3 1-6.5L3 9l6-1 3-6z"/>
+                </svg>
+              </div>
+              <span class="contact-badge">OWNER SERVER</span>
+            </div>
+            <div class="contact-info">
+              <strong class="contact-title mono" id="ownerNumberDisplay">+62 812-3456-7890</strong>
+              <span class="contact-sub">Kontak langsung pembelian & konfirmasi top-up</span>
+            </div>
+            <div class="owner-actions">
+              <a href="#" id="linkOwnerWa" target="_blank" rel="noopener noreferrer" class="owner-btn">Chat Owner</a>
+              <button class="owner-btn secondary" id="btnCopyOwner">Salin Nomor</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Store Banner CTA -->
+        <div class="store-cta-banner animate-in delay-5">
+          <div class="store-cta-text">
+            <span class="store-cta-eyebrow">KATALOG LENGKAP 01 – 10</span>
+            <strong>Siap Memperkuat Karaktermu di Zetriad Legend?</strong>
+            <p>Lihat daftar harga Paket Custom, Exclusive Add-On, Armor Kontrak, Book Kontrak, SL Exclusive, Ranks, dan All Weapon Texture.</p>
+          </div>
+          <a href="toko.html" class="btn-primary-lg">
+            <span>Buka Toko & Pricelist</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div>
+        <strong>Zetriad Legend</strong>
+        <p class="muted">IP: <span class="mono">zetriad.my.id</span> • Port: <span class="mono">25666</span></p>
+      </div>
+      <p class="muted">© <span id="currentYear"></span> Zetriad Legend. Bukan produk resmi Mojang / Microsoft.</p>
+    </div>
+  </footer>
+
+  <!-- Slide-over Cart Drawer -->
+  <div class="drawer-backdrop" id="drawerBackdrop"></div>
+  <aside class="cart-drawer" id="cartDrawer" aria-label="Keranjang Belanja">
+    <div class="drawer-header">
+      <div>
+        <span class="drawer-eyebrow">RINGKASAN BELANJA</span>
+        <h2 class="drawer-title">Keranjang Belanja</h2>
+      </div>
+      <button class="drawer-close" id="closeDrawerBtn" aria-label="Tutup Keranjang">&times;</button>
+    </div>
+    <div class="drawer-body" id="cartItemsContainer"></div>
+    <form class="drawer-footer hidden" id="cartCheckoutForm">
+      <div class="cart-summary-row">
+        <span class="muted">Estimasi Total</span>
+        <strong class="cart-total" id="cartTotalDisplay">0K</strong>
+      </div>
+      <label class="form-label">
+        <span>Nickname Minecraft (IGN) *</span>
+        <input type="text" id="cartPlayerIgn" required placeholder="Contoh: Steve_Legend" />
+      </label>
+      <label class="form-label">
+        <span>Catatan Pesanan (Opsional)</span>
+        <textarea id="cartPlayerNote" rows="2" placeholder="Contoh: Request skill / Tambah Request SL (+5K)"></textarea>
+      </label>
+      <div class="drawer-actions">
+        <button type="button" class="btn-ghost" id="clearCartBtn">Kosongkan</button>
+        <button type="submit" class="btn-primary-lg full-width">Beli Semua via WA</button>
+      </div>
+    </form>
+  </aside>
+
+  <!-- Toast Notification -->
+  <div class="toast hidden" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="data.js"></script>
+  <script src="ia_vault.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
