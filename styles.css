@@ -2275,6 +2275,36 @@ button:active,
   .filter-pill {
     flex-shrink: 0;
   }
+
+  /* 2 kolom rapi di HP untuk All Weapon Texture agar tidak terlalu panjang */
+  #cat-all-weapons-ia .items-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  #cat-all-weapons-ia .item-card {
+    padding: 10px;
+  }
+
+  #cat-all-weapons-ia .item-visual-box {
+    height: 105px;
+    margin-bottom: 8px;
+  }
+
+  #cat-all-weapons-ia .item-top {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+
+  #cat-all-weapons-ia .item-name {
+    font-size: 0.72rem;
+  }
+
+  #cat-all-weapons-ia .card-actions {
+    grid-template-columns: 1fr;
+    gap: 5px;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
