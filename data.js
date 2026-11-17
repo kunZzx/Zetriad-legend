@@ -8,7 +8,7 @@ const SERVER_CONFIG = {
   ip: "zetriad.my.id",
   port: "25666",
   contacts: {
-    whatsappGroup: "https://chat.whatsapp.com/GANTI_LINK_GRUP_WA",
+    whatsappGroup: "https://chat.whatsapp.com/Hsl0jpQO1C84eMg98ZXn4A",
     whatsappGroupLabel: "Grup WhatsApp",
     discord: "https://discord.gg/GANTI_LINK_DISCORD",
     discordLabel: "Discord Server",
