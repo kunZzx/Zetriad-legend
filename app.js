@@ -493,21 +493,45 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  function drawSingleVaultCanvas(cvs) {
+    const key = cvs.getAttribute("data-vk");
+    if (!key) return;
+    cvs.removeAttribute("data-vk");
+    decodeVaultSprite(key, (img) => {
+      const ctx = cvs.getContext("2d");
+      ctx.clearRect(0, 0, cvs.width, cvs.height);
+      ctx.imageSmoothingEnabled = false;
+      const scale = Math.min((cvs.width - 8) / img.width, (cvs.height - 8) / img.height);
+      const dw = Math.round(img.width * scale);
+      const dh = Math.round(img.height * scale);
+      const dx = Math.round((cvs.width - dw) / 2);
+      const dy = Math.round((cvs.height - dh) / 2);
+      ctx.drawImage(img, dx, dy, dw, dh);
+    });
+  }
+
+  let canvasObserver = null;
+  if ("IntersectionObserver" in window) {
+    canvasObserver = new IntersectionObserver(
+      (entries, obs) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            drawSingleVaultCanvas(entry.target);
+            obs.unobserve(entry.target);
+          }
+        });
+      },
+      { rootMargin: "400px 0px" }
+    );
+  }
+
   function hydrateVaultCanvases() {
     shopContainer.querySelectorAll("canvas.ia-sprite-canvas[data-vk]").forEach((cvs) => {
-      const key = cvs.getAttribute("data-vk");
-      cvs.removeAttribute("data-vk");
-      decodeVaultSprite(key, (img) => {
-        const ctx = cvs.getContext("2d");
-        ctx.clearRect(0, 0, cvs.width, cvs.height);
-        ctx.imageSmoothingEnabled = false;
-        const scale = Math.min((cvs.width - 8) / img.width, (cvs.height - 8) / img.height);
-        const dw = Math.round(img.width * scale);
-        const dh = Math.round(img.height * scale);
-        const dx = Math.round((cvs.width - dw) / 2);
-        const dy = Math.round((cvs.height - dh) / 2);
-        ctx.drawImage(img, dx, dy, dw, dh);
-      });
+      if (canvasObserver) {
+        canvasObserver.observe(cvs);
+      } else {
+        drawSingleVaultCanvas(cvs);
+      }
     });
   }
 
@@ -799,19 +823,19 @@ document.addEventListener("DOMContentLoaded", () => {
           if (entry.isIntersecting) {
             const cards = entry.target.querySelectorAll(".item-card");
             cards.forEach((card, idx) => {
-              card.style.transitionDelay = `${Math.min(idx * 35, 210)}ms`;
+              card.style.transitionDelay = idx < 8 ? `${idx * 30}ms` : "0ms";
             });
             entry.target.classList.add("is-visible");
             setTimeout(() => {
               cards.forEach((card) => {
                 card.style.transitionDelay = "0ms";
               });
-            }, 650);
+            }, 450);
             observer.unobserve(entry.target);
           }
         });
       },
-      { threshold: 0.04 }
+      { threshold: 0, rootMargin: "120px 0px" }
     );
     reveals.forEach((el) => observer.observe(el));
   }
